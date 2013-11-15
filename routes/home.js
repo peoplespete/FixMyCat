@@ -27,10 +27,8 @@ exports.shuffle = function(req, res){
 //POST /
 
 exports.create = function(req, res){
-  console.log(req.body);
   //req.body should have player and difficulty
   new Game(req.body).save(function(err, game){
-    console.log(game);
     res.send(game);
   });
 };

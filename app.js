@@ -9,7 +9,7 @@ var home = require('./routes/home');
 
 var app = express();
 var RedisStore = require('connect-redis')(express);
-mongoose.connect('mongodb://localhost/fix-my-case');
+mongoose.connect('mongodb://localhost/fix-my-cat');
 
 // configure express
 require('./config').initialize(app, RedisStore);

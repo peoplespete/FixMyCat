@@ -7,50 +7,37 @@ var socket;
 function initialize(){
   $(document).foundation();
   initializeSocketIO();
-  htmlCreateBoard();
+  // htmlCreateBoard();
   $('#startgame').on('submit', clickStartGame);
   $('#shuffle').on('click', clickShuffle);
-
 }
 
-
-
 function clickShuffle(){
-  sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, null, function(err, game){
-    console.log(game);
+  sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
+    console.log(data);
   });
 }
 
 function clickStartGame(e){
-  var url = "/";
+  var url = '/';
   var data = $('form#startgame').serialize();
-  console.log(data);
-  sendAjaxRequest(url, data, 'post', null, null, function(err, game){
-
-    console.log(game);
-    htmlCreateBoard(game);
+  sendAjaxRequest(url, data, 'post', null, e, function(data, status, jqXHR){
+    // console.log(data);
+    htmlCreateBoard(data);
   });
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+function htmlCreateBoard(data){
+  for(var i = 0; i < data.tiles.length; i++){
+    var x = data.tiles[i].home[0];
+    var y = data.tiles[i].home[1];
 
-function htmlCreateBoard(game){
-
-  for(i = 0; i < games.tiles.length; i++){
-    x = game.tiles[i].home[0];
-    y = game.tiles[i].home[1];
-
-    var $div = '<div data-x=' + x + 'data-y' + y + '></div>';
+    var $div = $('<div data-x=' + x + ' data-y=' + y + '></div>');
     $div.addClass('tile');
     $('#game').append($div);
-}
-
-
-
-
-
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
