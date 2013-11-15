@@ -17,6 +17,8 @@ require('./config').initialize(app, RedisStore);
 // routes
 app.get('/', home.index);
 app.post('/shuffle', home.shuffle);
+app.post('/', home.create);
+app.put('/', home.move);
 
 
 // start server & socket.io

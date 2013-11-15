@@ -6,7 +6,7 @@ exports.index = function(req, res){
   res.render('home/index', {title: 'Express'});
 };
 
-//POST /
+//POST /shuffle
 
 exports.shuffle = function(req, res){
   Game.findById(req.body.id, function(err, game){
@@ -19,4 +19,23 @@ exports.shuffle = function(req, res){
     }
     res.send(game);
   });
+};
+
+//POST /
+
+exports.create = function(req, res){
+  //req.body should have player and difficulty
+  new Game(req.body, function(err, game){
+    console.log(game);
+    res.send(game);
+  });
+};
+
+
+//PUT /
+
+exports.move = function(req, res){
+//req.body is game
+
+
 };
