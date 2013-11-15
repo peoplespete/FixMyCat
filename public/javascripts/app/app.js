@@ -26,7 +26,7 @@ function clickStartGame(){
   var data = $('form#startgame').serialize();
   sendAjaxRequest(url, data, 'post', null, null, function(err, game){
     console.log(game);
-    htmlCreateBoard();
+    htmlCreateBoard(game);
   });
 }
 
@@ -34,7 +34,21 @@ function clickStartGame(){
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
-function htmlCreateBoard(){
+function htmlCreateBoard(game){
+
+  for(i = 0; i < games.tiles.length; i++){
+    x = game.tiles[i].home[0];
+    y = game.tiles[i].home[1];
+
+    var $div = '<div data-x=' + x + 'data-y' + y + '></div>';
+    $div.addClass('tile');
+    $('#game').append($div);
+}
+
+
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
