@@ -21,11 +21,11 @@ function clickShuffle(){
   });
 }
 
-function clickStartGame(){
+function clickStartGame(e){
   var url = "/";
   var data = $('form#startgame').serialize();
+  console.log(data);
   sendAjaxRequest(url, data, 'post', null, null, function(err, game){
-    console.log(game);
     htmlCreateBoard();
   });
 }
