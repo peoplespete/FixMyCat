@@ -15,7 +15,7 @@ function initialize(){
 function clickShuffle(e){
   sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
     console.log(data);
-    htmlCreateBoard(data, 'current');
+    htmlShuffleBoard(data, 'current');
   });
 }
 
@@ -32,9 +32,9 @@ function clickStartGame(e){
 
 
 function htmlCreateBoard(data, pos){
-  $('.tile').remove();
   $('form#startgame').addClass('hidden');
   $('#game').attr('data-id', data._id);
+  var blank = {};
 
   for(var i = 0; i < data.tiles.length; i++){
     var x = data.tiles[i][pos][0];
@@ -43,17 +43,36 @@ function htmlCreateBoard(data, pos){
     var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
 
-
-    if(data.tiles[i].blank){
-      $div.addClass('empty');
-    }
-
     $('#game').append($div);
 
     $('#shuffle').removeClass('hidden');
-
-    availableMoves();
   }
+
+}
+
+function htmlShuffleBoard(data, pos){
+  $('.tile').remove();
+  var blank = {};
+
+  for(var i = 0; i < data.tiles.length; i++){
+    var x = data.tiles[i].current[0];
+    var y = data.tiles[i].current[1];
+    var xHome = data.tiles[i].home[0];
+    var yHome = data.tiles[i].home[1];
+
+
+    var $div = $('<div data-x=' + xHome + ' data-y=' + yHome + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
+    $div.addClass('tile');
+
+    $('#game').append($div);
+
+    $('#shuffle').addClass('hidden');
+  }
+
+  blank = _.find(data.tiles, function(t){ return t.blank; });
+  debugger;
+  $('.tile[data-x=' + blank.current[0] + '][data-y=' + blank.current[1] + ']').addClass('empty');
+  availableMoves(blank);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -70,9 +89,10 @@ function socketConnected(data){
 }
 
 
-function availableMoves(){
-  var x = $('.empty').data('x');
-  var y = $('.empty').data('y');
+function availableMoves(blank){
+  var x = blank.current[0];
+  var y = blank.current[1];
+  debugger;
   $('.tile[data-x='+(x-1)+'][data-y='+y+']').addClass('available');
   $('.tile[data-x='+(x+1)+'][data-y='+y+']').addClass('available');
   $('.tile[data-x='+x+'][data-y='+(y-1)+']').addClass('available');
@@ -80,7 +100,7 @@ function availableMoves(){
 }
 
 function clickMove(){
-  alert('sup');
+  // alert('sup');
 //send ajax request
   var x = $(this).data('x');
   var y = $(this).data('y');
