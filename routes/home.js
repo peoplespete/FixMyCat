@@ -5,7 +5,7 @@ var Game = mongoose.model('Game');
 //GET /
 
 exports.index = function(req, res){
-  res.render('home/index', {title: 'Express'});
+  res.render('home/index', {title: 'Fix My Cat'});
 };
 
 //POST /
