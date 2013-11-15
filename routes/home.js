@@ -64,7 +64,10 @@ exports.move = function(req, res){
     }
   }
   if(c === game.tiles.length){
-    res.send({status:'win'});
+    game.didWin = true
+    game.save(function(err, game){
+      res.send({status:'win'});
+    });
   }
   res.send(game);
 };
