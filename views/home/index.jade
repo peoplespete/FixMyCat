@@ -1,6 +1,26 @@
 extends ../template/layout
+include ../mixins/form-helper
 
 block content
   .row
-    .small-offset-10.small-2.columns
-      button.expand.radius.small Shuffle
+    .small-offset-9.small-3.columns
+      form#startform
+        fieldset
+          legend Start Game
+          .row
+            mixin field(12, 'text', 'name', 'Name', null, 'Your Name', true)
+            select#level
+              option(value="default") Level
+              option(value='easy') Easy
+              option(value="medium") Medium
+              option(value="hard") Hard
+          .row
+            .small-offset-9.small-3.columns
+              button#start(type='submit').expand.radius.small Start Game
+  .row
+    .small-offset-9.small-3.columns
+      button#shuffle.expand.radius.small.hidden Shuffle
+  .row
+    .small-12.columns
+      #game
+
