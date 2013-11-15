@@ -51,7 +51,7 @@ exports.move = function(req, res){
   game.tiles = _.map(game.tiles, function(t){
     if(t.clicked){
       t.current = emptyTile.current;
-    }elseif(t.blank){
+    }else if(t.blank){
       t.current = clickedTile.current;
     }
     return t;
