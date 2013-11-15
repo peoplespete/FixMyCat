@@ -22,7 +22,7 @@ function clickShuffle(){
 }
 
 function clickStartGame(e){
-  var url = "/";
+  var url = '/';
   var data = $('form#startgame').serialize();
   console.log(data);
   sendAjaxRequest(url, data, 'post', null, null, function(err, game){
@@ -37,15 +37,16 @@ function clickStartGame(e){
 
 
 function htmlCreateBoard(game){
+  $('form#startgame').toggleClass('hidden');
 
-  for(i = 0; i < games.tiles.length; i++){
-    x = game.tiles[i].home[0];
-    y = game.tiles[i].home[1];
+  for(var i = 0; i < games.tiles.length; i++){
+    var x = game.tiles[i].home[0];
+    var y = game.tiles[i].home[1];
 
     var $div = '<div data-x=' + x + 'data-y' + y + '></div>';
     $div.addClass('tile');
     $('#game').append($div);
-}
+  }
 
 
 
