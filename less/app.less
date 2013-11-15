@@ -1,5 +1,59 @@
-@base: #ffffff;
+@import url(http://fonts.googleapis.com/css?family=Russo+One);
+@headerfont: 'Russo One', sans-serif;
+
+@base: #fdfef8;
+
 
 body{
   background-color: @base;
+}
+
+#navbar{
+  height: 150px;
+  background: rgb(254,252,234); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(254,252,234,1) 0%, rgba(241,218,54,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,252,234,1)), color-stop(100%,rgba(241,218,54,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+}
+
+#navbar-gutter{
+  background: rgb(254,252,234); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(254,252,234,1) 0%, rgba(241,218,54,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,252,234,1)), color-stop(100%,rgba(241,218,54,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+}
+
+#header{
+  margin-left: 103px;
+  padding-top: 75px;
+  font-family: @headerfont;
+  font-size: 70px;
+  text-shadow: 1px 1px 1px #000, 3px 3px 5px #E87B0C;
+  float: left;
+}
+
+#cat-head{
+  position: relative;
+  top: -87px;
+  left: -85px;
+  height: 50px;
+  width: 50px;
+}
+
+#tools{
+  position: relative;
+  top: -87px;
+
+}
+
+.hidden{
+  display: none;
 }

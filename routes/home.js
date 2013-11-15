@@ -1,25 +1,28 @@
-var _ = require('lodash');
+var __ = require('lodash');
+var mongoose = require('mongoose');
+var Game = mongoose.model('Game');
 
 //GET /
 
 exports.index = function(req, res){
-  res.render('home/index', {title: 'Express'});
+  res.render('home/index', {title: 'Fix My Cat'});
 };
 
 //POST /shuffle
 
 exports.shuffle = function(req, res){
   Game.findById(req.body.id, function(err, game){
-    var tilesHome = _.map(game.tiles, function(t){
+    var tilesHome = __.map(game.tiles, function(t){
       return t.home;
     });
-    var tilesShuffled = _.shuffle(tilesHome);
-    for(var i = 0; i<tileShuffled.length; i++){
-      game.tiles[i].current = tileShuffled[i];
+    var tilesShuffled = __.shuffle(tilesHome);
+    for(var i = 0; i<tilesShuffled.length; i++){
+      game.tiles[i].current = tilesShuffled[i];
     }
     res.send(game);
   });
 };
+
 
 //POST /
 
