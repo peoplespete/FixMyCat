@@ -12,9 +12,9 @@ function initialize(){
   $('#game').on('click', '.available', clickMove);
 }
 
-function clickShuffle(){
+function clickShuffle(e){
   sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
-    console.log(data);
+    htmlCreateBoard(data);
   });
 }
 
@@ -30,7 +30,8 @@ function clickStartGame(e){
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 function htmlCreateBoard(data){
- $('form#startgame').toggleClass('hidden');
+  $('.tile').remove();
+  $('form#startgame').toggleClass('hidden');
 
   for(var i = 0; i < data.tiles.length; i++){
     var x = data.tiles[i].home[0];
@@ -44,7 +45,7 @@ function htmlCreateBoard(data){
     }
 
     $('#game').append($div);
-    $('#game').data('id', game._id);
+    $('#game').attr('data-id', data._id);
 
     $('#shuffle').removeClass('hidden');
 
