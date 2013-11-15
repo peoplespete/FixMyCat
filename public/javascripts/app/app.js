@@ -32,20 +32,24 @@ function clickStartGame(e){
 
 function htmlCreateBoard(data,pos){
   $('form#startgame').toggleClass('hidden');
+  $('#game').data('id', data.id);
 
   for(var i = 0; i < data.tiles.length; i++){
-    var x = data.tiles[i][pos[0]];
-    var y = data.tiles[i][pos[1]];
+    var x = data.tiles[i][pos][0];
+    var y = data.tiles[i][pos][1];
 
-    var $div = $('<div data-x=' + x + ' data-y=' + y + '></div>');
+    var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
 
-    if(game.tiles[i].blank){
-      $div.data('empty');
+
+    if(data.tiles[i].blank){
+      $div.addClass('empty');
     }
 
     $('#game').append($div);
-    $('#game').data('id', game._id);
+
+
+    $('#shuffle').removeClass('hidden');
 
     availableMoves();
   }
