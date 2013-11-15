@@ -14,7 +14,8 @@ function initialize(){
 
 function clickShuffle(e){
   sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
-    htmlCreateBoard(data);
+    console.log(data);
+    htmlCreateBoard(data, 'current');
   });
 }
 
@@ -23,29 +24,31 @@ function clickStartGame(e){
   var data = $('form#startgame').serialize();
 
   sendAjaxRequest(url, data, 'post', null, e, function(data, status, jqXHR){
-    htmlCreateBoard(data);
+    htmlCreateBoard(data, 'home');
   });
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-function htmlCreateBoard(data){
+
+function htmlCreateBoard(data, pos){
   $('.tile').remove();
-  $('form#startgame').toggleClass('hidden');
+  $('form#startgame').addClass('hidden');
+  $('#game').attr('data-id', data._id);
 
   for(var i = 0; i < data.tiles.length; i++){
-    var x = data.tiles[i].home[0];
-    var y = data.tiles[i].home[1];
+    var x = data.tiles[i][pos][0];
+    var y = data.tiles[i][pos][1];
 
     var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
+
 
     if(data.tiles[i].blank){
       $div.addClass('empty');
     }
 
     $('#game').append($div);
-    $('#game').attr('data-id', data._id);
 
     $('#shuffle').removeClass('hidden');
 
@@ -70,13 +73,14 @@ function socketConnected(data){
 function availableMoves(){
   var x = $('.empty').data('x');
   var y = $('.empty').data('y');
-  $('.tiles[data-x='+(x-1)+'][data-y='+y+']').addClass('available');
-  $('.tiles[data-x='+(x+1)+'][data-y='+y+']').addClass('available');
-  $('.tiles[data-x='+x+'][data-y='+(y-1)+']').addClass('available');
-  $('.tiles[data-x='+x+'][data-y='+(y+1)+']').addClass('available');
+  $('.tile[data-x='+(x-1)+'][data-y='+y+']').addClass('available');
+  $('.tile[data-x='+(x+1)+'][data-y='+y+']').addClass('available');
+  $('.tile[data-x='+x+'][data-y='+(y-1)+']').addClass('available');
+  $('.tile[data-x='+x+'][data-y='+(y+1)+']').addClass('available');
 }
 
 function clickMove(){
+  alert('sup');
 //send ajax request
   var x = $(this).data('x');
   var y = $(this).data('y');
