@@ -39,12 +39,14 @@ function htmlCreateBoard(data){
     var $div = $('<div data-x=' + x + ' data-y=' + y + '></div>');
     $div.addClass('tile');
 
-    if(game.tiles[i].blank){
+    if(data.tiles[i].blank){
       $div.addClass('empty');
     }
 
     $('#game').append($div);
     $('#game').data('id', game._id);
+
+    $('#shuffle').removeClass('hidden');
 
     availableMoves();
   }
