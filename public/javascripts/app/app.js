@@ -8,11 +8,11 @@ function initialize(){
   $(document).foundation();
   initializeSocketIO();
   htmlCreateBoard();
+  $('#startgame').on('submit', clickStartGame);
   $('#shuffle').on('click', clickShuffle);
+
 }
 
-function htmlCreateBoard(){
-}
 
 
 function clickShuffle(){
@@ -21,9 +21,21 @@ function clickShuffle(){
   });
 }
 
+function clickStartGame(){
+  var url = "/";
+  var data = $('form#startgame').serialize();
+  sendAjaxRequest(url, data, 'post', null, null, function(err, game){
+    console.log(game);
+    htmlCreateBoard();
+  });
+}
 
 
+///////////////////////////////////////////////////////////////////////////////////////////
 
+
+function htmlCreateBoard(){
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 function initializeSocketIO(){
@@ -37,3 +49,5 @@ function initializeSocketIO(){
 function socketConnected(data){
   console.log(data);
 }
+
+
