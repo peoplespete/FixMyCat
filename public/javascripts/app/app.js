@@ -36,7 +36,7 @@ function htmlCreateBoard(data){
     var x = data.tiles[i].home[0];
     var y = data.tiles[i].home[1];
 
-    var $div = $('<div data-x=' + x + ' data-y=' + y + '></div>');
+    var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
 
     if(data.tiles[i].blank){
