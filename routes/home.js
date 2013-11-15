@@ -16,8 +16,8 @@ exports.shuffle = function(req, res){
       return t.home;
     });
     var tilesShuffled = __.shuffle(tilesHome);
-    for(var i = 0; i<tileShuffled.length; i++){
-      game.tiles[i].current = tileShuffled[i];
+    for(var i = 0; i<tilesShuffled.length; i++){
+      game.tiles[i].current = tilesShuffled[i];
     }
     res.send(game);
   });
