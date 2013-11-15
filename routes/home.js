@@ -39,37 +39,41 @@ exports.create = function(req, res){
 //PUT /
 
 exports.move = function(req, res){
-//req.body is game
-  var clickedTile = _.find(game.tiles, function(t){
-    return t.clicked;
-  });
-
-  var emptyTile = _.find(game.tiles, function(t){
-    return t.blank;
-  });
-
-  game.tiles = _.map(game.tiles, function(t){
-    if(t.clicked){
-      t.current = emptyTile.current;
-    }else if(t.blank){
-      t.current = clickedTile.current;
-    }
-    return t;
-  });
-  //CHECK FOR WIN!!!
-  var c = 0;
-  for(var i = 0; i<game.tiles.length; i++){
-    if(game.tiles[i].current === game.tiles[i].home){
-      c++;
-    }
-  }
-  if(c === game.tiles.length){
-    game.didWin = true
-    game.save(function(err, game){
-      res.send({status:'win'});
+//req.body must have .x and .y of clicked and .id of board
+  var clickedCurrent = [req.body.x, req.body.y];
+  Game.findById(req.body.id, function(err, game){
+    var clickedTile = _.find(game.tiles, function(t){
+      return t.current === clickedCurrent;
     });
-  }
-  res.send(game);
+
+    var emptyTile = _.find(game.tiles, function(t){
+      return t.blank;
+    });
+
+
+    game.tiles = _.map(game.tiles, function(t){
+      if(t.clicked){
+        t.current = emptyTile.current;
+      }else if(t.blank){
+        t.current = clickedTile.current;
+      }
+      return t;
+    });
+    //CHECK FOR WIN!!!
+    var c = 0;
+    for(var i = 0; i<game.tiles.length; i++){
+      if(game.tiles[i].current === game.tiles[i].home){
+        c++;
+      }
+    }
+    if(c === game.tiles.length){
+      game.didWin = true
+      game.save(function(err, game){
+        res.send({status:'win'});
+      });
+    }
+    res.send(game);
+  });
 };
 
 //
