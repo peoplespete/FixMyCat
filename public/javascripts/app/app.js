@@ -15,6 +15,7 @@ function initialize(){
 function clickShuffle(){
   sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
     console.log(data);
+    htmlCreateBoard(data, 'current');
   });
 }
 
@@ -23,24 +24,24 @@ function clickStartGame(e){
   var data = $('form#startgame').serialize();
 
   sendAjaxRequest(url, data, 'post', null, e, function(data, status, jqXHR){
-    htmlCreateBoard(data);
+    htmlCreateBoard(data, 'home');
   });
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-function htmlCreateBoard(data){
- $('form#startgame').toggleClass('hidden');
+function htmlCreateBoard(data,pos){
+  $('form#startgame').toggleClass('hidden');
 
   for(var i = 0; i < data.tiles.length; i++){
-    var x = data.tiles[i].home[0];
-    var y = data.tiles[i].home[1];
+    var x = data.tiles[i][pos[0]];
+    var y = data.tiles[i][pos[1]];
 
     var $div = $('<div data-x=' + x + ' data-y=' + y + '></div>');
     $div.addClass('tile');
 
     if(game.tiles[i].blank){
-      $div.addClass('empty');
+      $div.data('empty');
     }
 
     $('#game').append($div);
