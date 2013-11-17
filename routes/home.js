@@ -18,9 +18,9 @@ exports.shuffle = function(req, res){
     var tilesShuffled = __.shuffle(tilesHome);
     for(var i = 0; i<tilesShuffled.length; i++){
       game.tiles[i].current = tilesShuffled[i];
-      if(game.tiles[i].blank){
-        console.log(game.tiles[i]);
-      }
+      // if(game.tiles[i].blank){
+      //   console.log(game.tiles[i]);
+      // }
     }
     game.markModified('tiles');
     game.save(function(err,game){res.send(game);});
@@ -41,17 +41,35 @@ exports.create = function(req, res){
 //PUT /
 
 exports.move = function(req, res){
-//req.body must have .x and .y of clicked and .id of board
+//req.body must have .x and .y of clicked and .id of board and .emptyx and .emptyy of empty
+  //it is just not putting the blank in the right spot when it returns game.
+
   var clickedCurrent = [req.body.x, req.body.y];
+  var emptyCurrent = [req.body.emptyx, req.body.emptyy];
+  console.log(clickedCurrent + '! clicked before switch');
+  console.log(emptyCurrent + '! empty before switch');
   Game.findById(req.body.id, function(err, game){
-    var emptyTile = _.find(game.tiles, function(t){
-      return t.blank;
+    var futureClicked;
+    var futureEmpty;
+    game.tiles = __.map(game.tiles, function(t){
+      if((t.current[0] == clickedCurrent[0]) && (t.current[1] == clickedCurrent[1])){
+        //if it is the clicked tile
+        futureClicked = emptyCurrent;
+      }else if((t.current[0] == emptyCurrent[0]) && (t.current[1] == emptyCurrent[1])){
+        //if it is the empty tile
+        futureEmpty = clickedCurrent;
+      }
+      return t;
     });
-    game.tiles = _.map(game.tiles, function(t){
-      if(t.current === clickedCurrent){
-        t.current = emptyTile.current;
-      }else if(t.blank){
-        t.current = clickedCurrent;
+    game.tiles = __.map(game.tiles, function(t){
+      if((t.current[0] == clickedCurrent[0]) && (t.current[1] == clickedCurrent[1])){
+        //if it is the clicked tile
+        t.current = futureClicked;
+        console.log(t.current + '! clicked after switch');
+      }else if((t.current[0] == emptyCurrent[0]) && (t.current[1] == emptyCurrent[1])){
+        //if it is the empty tile
+        t.current = futureEmpty;
+        console.log(t.current + '! empty after switch');
       }
       return t;
     });
@@ -62,6 +80,7 @@ exports.move = function(req, res){
         c++;
       }
     }
+    console.log(c);
     if(c === game.tiles.length){
       game.didWin = true;
       game.save(function(err, game){
@@ -76,3 +95,5 @@ exports.move = function(req, res){
 };
 
 //
+
+

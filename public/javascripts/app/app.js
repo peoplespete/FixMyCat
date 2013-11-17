@@ -39,7 +39,6 @@ function htmlCreateBoard(data, pos){
   for(var i = 0; i < data.tiles.length; i++){
     var x = data.tiles[i][pos][0];
     var y = data.tiles[i][pos][1];
-
     var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
 
@@ -51,36 +50,24 @@ function htmlCreateBoard(data, pos){
 }
 
 function htmlShuffleBoard(data, pos){
- //problem somewehre here!!!!should be sorted by current and then placed in order
-
+  /////CHECK THAT MOVE IN HOME>JS IS WORKING
   $('.tile').remove();
-  var blank = {};
-
   var tiles = [];
   for(var i =0; i<data.tiles.length;i++){
     tiles.push(data.tiles[i]);
   }
   tiles = _.sortBy(tiles, function(t){
-    return [t.current[0],t.current[1]];
+    return [t.current[1],t.current[0]];
   });
-  console.log(tiles);
-  for(var i = 0; i < data.tiles.length; i++){
-    var x = tiles[i][0];
-    var y = tiles[i][1];
-    var xHome = data.tiles[i].current[0];
-    var yHome = data.tiles[i].current[1];
-    var help = {};
-    help.home = [xHome,yHome];
-    help.current = [x,y];
-    help.img =  '<img src="../images/cat' + x + '_' + y + '.png">';
-    console.log(help);
+  for(var i = 0; i < tiles.length; i++){
+    var x = tiles[i].current[0];
+    var y = tiles[i].current[1];
+    var xHome = tiles[i].home[0];
+    var yHome = tiles[i].home[1];
 
-    var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' +  + '_' + y + '.png" ></div>');
-
+    var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + xHome + '_' + yHome + '.png" ></div>');
     $div.addClass('tile');
-
     $('#game').append($div);
-
     $('#shuffle').addClass('hidden');
   }
 
@@ -116,19 +103,20 @@ function availableMoves(blank){
 }
 
 function clickMove(){
-  // alert('sup');
 //send ajax request
   var x = $(this).data('x');
   var y = $(this).data('y');
   var id = $('#game').data('id');
   var url = '/';
-  var data = {x: x, y: y, id: id};
-  console.log(data);
+  var data = {x: x, y: y, id: id, emptyx: $('.empty').attr('data-x'), emptyy: $('.empty').attr('data-y')};
+  console.log(data.x + ', ' + data.y);
+  console.log($('.empty').attr('data-x')+ ', ' + $('.empty').attr('data-y'));
+
   sendAjaxRequest(url, data, 'post', 'put', null, function(data, status, jqXHR){
     console.log(data);
     if(data.status){
       alert('You win!');
     }
-    htmlCreateBoard(data);
+    htmlShuffleBoard(data, 'current');
   });
 }
