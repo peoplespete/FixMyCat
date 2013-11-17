@@ -51,17 +51,32 @@ function htmlCreateBoard(data, pos){
 }
 
 function htmlShuffleBoard(data, pos){
+ //problem somewehre here!!!!should be sorted by current and then placed in order
+
   $('.tile').remove();
   var blank = {};
 
+  var tiles = [];
+  for(var i =0; i<data.tiles.length;i++){
+    tiles.push(data.tiles[i]);
+  }
+  tiles = _.sortBy(tiles, function(t){
+    return [t.current[0],t.current[1]];
+  });
+  console.log(tiles);
   for(var i = 0; i < data.tiles.length; i++){
-    var x = data.tiles[i].current[0];
-    var y = data.tiles[i].current[1];
-    var xHome = data.tiles[i].home[0];
-    var yHome = data.tiles[i].home[1];
+    var x = tiles[i][0];
+    var y = tiles[i][1];
+    var xHome = data.tiles[i].current[0];
+    var yHome = data.tiles[i].current[1];
+    var help = {};
+    help.home = [xHome,yHome];
+    help.current = [x,y];
+    help.img =  '<img src="../images/cat' + x + '_' + y + '.png">';
+    console.log(help);
 
+    var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' +  + '_' + y + '.png" ></div>');
 
-    var $div = $('<div data-x=' + xHome + ' data-y=' + yHome + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
 
     $('#game').append($div);
@@ -70,8 +85,10 @@ function htmlShuffleBoard(data, pos){
   }
 
   blank = _.find(data.tiles, function(t){ return t.blank; });
-  debugger;
+
+  console.log(blank);
   $('.tile[data-x=' + blank.current[0] + '][data-y=' + blank.current[1] + ']').addClass('empty');
+
   availableMoves(blank);
 }
 
@@ -92,7 +109,6 @@ function socketConnected(data){
 function availableMoves(blank){
   var x = blank.current[0];
   var y = blank.current[1];
-  debugger;
   $('.tile[data-x='+(x-1)+'][data-y='+y+']').addClass('available');
   $('.tile[data-x='+(x+1)+'][data-y='+y+']').addClass('available');
   $('.tile[data-x='+x+'][data-y='+(y-1)+']').addClass('available');

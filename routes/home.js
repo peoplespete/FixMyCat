@@ -18,8 +18,12 @@ exports.shuffle = function(req, res){
     var tilesShuffled = __.shuffle(tilesHome);
     for(var i = 0; i<tilesShuffled.length; i++){
       game.tiles[i].current = tilesShuffled[i];
+      if(game.tiles[i].blank){
+        console.log(game.tiles[i]);
+      }
     }
-    res.send(game);
+    game.markModified('tiles');
+    game.save(function(err,game){res.send(game);});
   });
 };
 
