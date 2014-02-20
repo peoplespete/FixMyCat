@@ -30,9 +30,10 @@ How To Use
 
 1. Enter your name and select `Easy` as the difficulty. (After working on easy you'll understand why there is no hard.)
 2. Click `Start Game`
-3. After seeing what a fixed cat (pun intended) looks like, click `Shuffle` to mix up the cat
-4. Click on a tile bordering the open space
-5. Repeat step 4 until you win!
+3. See what a fixed cat (pun intended) looks like
+4. Click `Shuffle` to mix up the cat
+5. Click on a tile bordering the open space
+6. Repeat step 5 until you win!
 
 
 Additional Resources
