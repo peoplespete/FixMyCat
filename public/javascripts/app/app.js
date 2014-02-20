@@ -14,7 +14,6 @@ function initialize(){
 
 function clickShuffle(e){
   sendAjaxRequest('/shuffle', {id: $('#game').attr('data-id')}, 'post', null, e, function(data, status, jqXHR){
-    // console.log(data);
     htmlShuffleBoard(data, 'current');
   });
 }
@@ -41,19 +40,13 @@ function htmlCreateBoard(data, pos){
     var y = data.tiles[i][pos][1];
     var $div = $('<div data-x=' + x + ' data-y=' + y + '><img src="../images/cat' + x + '_' + y + '.png"</div>');
     $div.addClass('tile');
-
     $('#game').append($div);
-
     $('#shuffle').removeClass('hidden');
   }
 
 }
 
 function htmlShuffleBoard(data, pos){
-  /////CHECK THAT MOVE IN HOME>JS IS WORKING
-  // for(var i = 0; i<data.tiles.length; i++){
-  //   console.log('ABOUT TO REDO BOARD    current:' + data.tiles[i].current + '  home:'+data.tiles[i].home+ 'blank:' + data.tiles[i].blank);
-  // }
   $('.tile').remove();
   var tiles = [];
   for(var i =0; i<data.tiles.length;i++){
@@ -77,7 +70,6 @@ function htmlShuffleBoard(data, pos){
 
   blank = _.find(data.tiles, function(t){ return t.blank; });
 
-  // console.log(blank);
   $('.tile[data-x=' + blank.current[0] + '][data-y=' + blank.current[1] + ']').addClass('empty');
 
   availableMoves(blank);
@@ -93,7 +85,6 @@ function initializeSocketIO(){
 }
 
 function socketConnected(data){
-  // console.log(data);
 }
 
 
@@ -113,16 +104,8 @@ function clickMove(){
   var id = $('#game').attr('data-id');
   var url = '/';
   var data = {x: x, y: y, id: id, emptyx: $('.empty').attr('data-x'), emptyy: $('.empty').attr('data-y')};
-  // console.log(data.x + ', ' + data.y);
-  // console.log($('.empty').attr('data-x')+ ', ' + $('.empty').attr('data-y'));
 
   sendAjaxRequest(url, data, 'post', 'put', null, function(data, status, jqXHR){
-    // for(var i = 0; i<data.tiles.length; i++){
-    //   console.log('after switch    current:' + data.tile[i].current + '  home:'+data.tile[i].home);
-    // }
-    // if(data.status){
-    //   alert('You win!');
-    // }
     if(data.didWin){
       alert('You win!');
     }else{
