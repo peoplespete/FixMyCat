@@ -1,11 +1,11 @@
 Fix My Cat
 ==================
 
-A [Sliding Tile Puzzle](http://en.wikipedia.org/wiki/Sliding_puzzle) that is a reaction against the internet community's obsession with cats
+[Sliding Tile Puzzle](http://en.wikipedia.org/wiki/Sliding_puzzle) (reaction against the internet community's obsession with cats)
 
 Why?
 -----------
-Given a day to create a game to showcase front end development skills (HTML, CSS, JS), my group of four came up with the Fix My Cat scenario.
+Given a day to create a game to showcase development skills (HTML, CSS, JS), my group of four came up with the Fix My Cat scenario.
 
 Setup
 ------
